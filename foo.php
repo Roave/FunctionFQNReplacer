@@ -183,5 +183,5 @@ $traverser->addVisitor(new ReplaceUnqualifiedFunctionCallsWithQualifiedReference
 
 $modifiedAst = $traverser->traverse($ast);
 
-echo(new Standard())->prettyPrint($modifiedAst);
+echo "<?php\n" . (new Standard())->prettyPrint($modifiedAst);
 
