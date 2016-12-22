@@ -74,7 +74,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferences implements No
 
         if ($node instanceof Use_ && $node->type === Use_::TYPE_FUNCTION) {
             foreach ($node->uses as $use) {
-                $this->importedFunctionNames[] = strtolower($use->alias);
+                $this->importedFunctionNames[strtolower($use->alias)] = null;
             }
         }
     }
@@ -125,12 +125,12 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferences implements No
         $originalNameString             = (string) $originalName;
         $currentNamespaceNamespacedName = ltrim($this->currentNamespace . '\\' . $originalNameString, '\\');
 
-        if (($this->functionExists)($currentNamespaceNamespacedName)) {
-            return new FullyQualified($currentNamespaceNamespacedName);
-        }
-
         if ($this->aliasIsImported($originalName)) {
             return $originalName;
+        }
+
+        if (($this->functionExists)($currentNamespaceNamespacedName)) {
+            return new FullyQualified($currentNamespaceNamespacedName);
         }
 
         return new FullyQualified($originalNameString);
@@ -138,6 +138,6 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferences implements No
 
     private function aliasIsImported(Name $originalName) : bool
     {
-        return in_array(strtolower((string) $originalName), $this->importedFunctionNames, true);
+        return array_key_exists(strtolower((string) $originalName), $this->importedFunctionNames);
     }
 }
