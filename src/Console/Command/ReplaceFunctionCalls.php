@@ -73,6 +73,9 @@ EOT
 
     /**
      * {@inheritDoc}
+     *
+     * @throws \BetterReflection\SourceLocator\Exception\InvalidDirectory
+     * @throws \BetterReflection\SourceLocator\Exception\InvalidFileInfo
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
