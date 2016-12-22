@@ -25,6 +25,8 @@ use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\Node\Stmt\Use_;
+use PhpParser\Node\Stmt\UseUse;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter\Standard;
@@ -73,7 +75,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         $node = $this->createMock(Node::class);
 
         $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function () {
-            return true;
+            self::fail('Not expected to be called');
         });
 
         self::assertNull($visitor->beforeTraverse([$node]));
@@ -86,7 +88,9 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
     {
         $functionCall = new FuncCall(new Name('foo'));
 
-        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function () {
+        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function (string $function) : bool {
+            self::assertSame('foo', $function);
+
             return true;
         });
 
@@ -107,7 +111,9 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
 
         $namespace->stmts[] = $functionCall;
 
-        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function () {
+        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function (string $function) : bool {
+            self::assertSame('bar\\foo', $function);
+
             return false;
         });
 
@@ -131,7 +137,9 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
 
         $namespace->stmts[] = $functionCall;
 
-        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function () {
+        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function (string $function) : bool {
+            self::assertSame('bar\\foo', $function);
+
             return true;
         });
 
