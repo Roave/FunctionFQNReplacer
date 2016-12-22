@@ -21,9 +21,8 @@ if (! $autoloaded) {
     throw new \RuntimeException('An autoloader could not be detected: did you install this package via composer?');
 }
 
-$cli = new Application('finalizer');
+$cli = new Application('Function FQN Replacer');
 
 $cli->add(new ReplaceFunctionCalls());
-$cli->setDefaultCommand('roave:function-fqn-replacer:replace');
 
 $cli->run();
