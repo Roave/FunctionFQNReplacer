@@ -34,6 +34,6 @@
         }
     },
     "bin": [
-        "bin/function-fqn-replacer"
+        "function-fqn-replacer"
     ]
 }
