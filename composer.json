@@ -8,9 +8,13 @@
         "phpunit/phpunit":           "^5.7.4",
         "squizlabs/php_codesniffer": "^2.7.1"
     },
+    "autoload": {
+        "Roave\\FunctionFQNReplacer\\": "src"
+    },
     "autoload-dev": {
         "psr-4": {
-            "RoaveBench\\FunctionFQNReplacer\\": "benchmark"
+            "RoaveBench\\FunctionFQNReplacer\\": "benchmark",
+            "RoaveTest\\FunctionFQNReplacer\\":  "test"
         }
     }
 }
