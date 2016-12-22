@@ -104,3 +104,10 @@ This project is not meant to be run as a dependency: please install it as standa
 ```php
 composer create-project roave/function-fqn-replacer
 ```
+
+## Usage
+
+
+```sh
+./function-fqn-replacer path/to/project/files path/to/existing/functions another/path/to/existing/functions
+```
