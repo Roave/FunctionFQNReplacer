@@ -187,8 +187,8 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
     public function testDoesNotReplaceUnknownImportedFunctionWithDifferentCasing()
     {
         $namespace    = new Namespace_(new Name('bar'));
-        $use          = new Use_([new UseUse(new Name('baz\\foo'))], Use_::TYPE_FUNCTION);
-        $functionCall = new FuncCall(new Name('FOO'));
+        $use          = new Use_([new UseUse(new Name('baz\\fOo'))], Use_::TYPE_FUNCTION);
+        $functionCall = new FuncCall(new Name('fOo'));
 
         $namespace->stmts[] = $use;
         $namespace->stmts[] = $functionCall;
@@ -206,7 +206,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         $replaced = $visitor->leaveNode($functionCall);
 
         self::assertNotSame($functionCall, $replaced);
-        self::assertEquals(new FuncCall(new Name('FOO')), $replaced);
+        self::assertEquals(new FuncCall(new Name('fOo')), $replaced);
 
         $visitor->leaveNode($namespace);
         self::assertNull($visitor->afterTraverse([$namespace]));
@@ -235,6 +235,34 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
 
         self::assertNotSame($functionCall, $replaced);
         self::assertEquals(new FuncCall(new Name('foo')), $replaced);
+
+        $visitor->leaveNode($namespace);
+        self::assertNull($visitor->afterTraverse([$namespace]));
+    }
+
+    public function testDoesNotReplaceUnknownImportedAliasedFunctionWithDifferentCasing()
+    {
+        $namespace    = new Namespace_(new Name('bar'));
+        $use          = new Use_([new UseUse(new Name('baz\\bar'), 'fOo')], Use_::TYPE_FUNCTION);
+        $functionCall = new FuncCall(new Name('FoO'));
+
+        $namespace->stmts[] = $use;
+        $namespace->stmts[] = $functionCall;
+
+        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function () {
+            self::fail('Not expected to be called');
+        });
+
+        self::assertNull($visitor->beforeTraverse([$namespace]));
+        self::assertNull($visitor->enterNode($namespace));
+        self::assertNull($visitor->enterNode($use));
+        self::assertNull($visitor->leaveNode($use));
+        self::assertNull($visitor->enterNode($functionCall));
+
+        $replaced = $visitor->leaveNode($functionCall);
+
+        self::assertNotSame($functionCall, $replaced);
+        self::assertEquals(new FuncCall(new Name('FoO')), $replaced);
 
         $visitor->leaveNode($namespace);
         self::assertNull($visitor->afterTraverse([$namespace]));
