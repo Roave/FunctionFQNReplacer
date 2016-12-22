@@ -123,7 +123,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferences implements No
     private function replaceFunctionName(Name $originalName) : Name
     {
         $originalNameString             = (string) $originalName;
-        $currentNamespaceNamespacedName = $this->currentNamespace . '\\' . $originalNameString;
+        $currentNamespaceNamespacedName = ltrim($this->currentNamespace . '\\' . $originalNameString, '\\');
 
         if (($this->functionExists)($currentNamespaceNamespacedName)) {
             return new FullyQualified($currentNamespaceNamespacedName);
