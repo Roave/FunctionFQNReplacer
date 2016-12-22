@@ -68,8 +68,8 @@ difference when it comes to commonly and widespread libraries.
 
 In order to state the point more clearly, some benchmarks are provided with this package.
 
-Simply run `php -n run --revs=100 --iterations=3 --warmup=2 --report=aggregate` from within
-this project:
+Simply run `php -n ./vendor/bin/phpbench run --revs=1000 --iterations=10 --warmup=2 --report=aggregate`
+from within this project:
 
 ```
 $ php -n ./vendor/bin/phpbench run --revs=1000 --iterations=10 --warmup=2 --report=aggregate
