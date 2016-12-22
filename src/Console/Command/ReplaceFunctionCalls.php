@@ -27,20 +27,19 @@ final class ReplaceFunctionCalls extends Command
         parent::__construct('roave:function-fqn-replacer:replace');
 
         $this
-            ->setDescription(
-                'Checks the given paths for classes that should or shouldn\'t be final'
-            )
-            ->setDefinition([new InputArgument(
-                'path',
-                InputArgument::REQUIRED,
-                'Path to be checked for function usages to be replaced with absolute references'
-            )])
-            ->setDefinition([new InputArgument(
-                'function-definitions',
-                InputArgument::REQUIRED | InputArgument::IS_ARRAY,
-                'Paths where functions were defined'
-            )])
-        ;
+            ->setDescription('Replaces relative function references with matching absolute function references')
+            ->setDefinition([
+                new InputArgument(
+                    'path',
+                    InputArgument::REQUIRED,
+                    'Path to be checked for function usages to be replaced with absolute references'
+                ),
+                new InputArgument(
+                    'function-definitions',
+                    InputArgument::REQUIRED | InputArgument::IS_ARRAY,
+                    'Paths where functions were defined'
+                )
+            ]);
         $this->setHelp(<<<'EOT'
 The <info>%command.name%</info> command replaces usages of functions
 in your projects with their absolute references.
@@ -87,7 +86,7 @@ EOT
         $parser  = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
         $printer = new Standard();
 
-        foreach (PhpFilesInDirectoryIterator::iterate($input->getArgument('path')) as $file) {
+        foreach (PhpFilesInDirectoryIterator::iterate([$input->getArgument('path')]) as $file) {
             $output->writeln('<info>' . $file . '</info>');
 
             file_put_contents(
