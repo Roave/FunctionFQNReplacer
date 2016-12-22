@@ -41,7 +41,7 @@ use Roave\FunctionFQNReplacer\NodeVisitor\ReplaceUnqualifiedFunctionCallsWithQua
  */
 final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends PHPUnit_Framework_TestCase
 {
-    public function testCompleteCodeReplacementTest()
+    public function testCompleteCodeReplacementTest() : void
     {
         $traverser = new NodeTraverser();
 
@@ -69,7 +69,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         );
     }
 
-    public function testDoesNotReplaceUnknownNodeTypes()
+    public function testDoesNotReplaceUnknownNodeTypes() : void
     {
         /* @var $node Node */
         $node = $this->createMock(Node::class);
@@ -84,7 +84,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         self::assertNull($visitor->afterTraverse([$node]));
     }
 
-    public function testReplacesFunctionCallInGlobalNamespace()
+    public function testReplacesFunctionCallInGlobalNamespace() : void
     {
         $functionCall = new FuncCall(new Name('foo'));
 
@@ -104,7 +104,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         self::assertNull($visitor->afterTraverse([$functionCall]));
     }
 
-    public function testReplacesUnknownFunctionCallInNamespace()
+    public function testReplacesUnknownFunctionCallInNamespace() : void
     {
         $namespace    = new Namespace_(new Name('bar'));
         $functionCall = new FuncCall(new Name('foo'));
@@ -130,7 +130,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         self::assertNull($visitor->afterTraverse([$namespace]));
     }
 
-    public function testReplacesKnownFunctionCallInNamespace()
+    public function testReplacesKnownFunctionCallInNamespace() : void
     {
         $namespace    = new Namespace_(new Name('bar'));
         $functionCall = new FuncCall(new Name('foo'));
@@ -156,7 +156,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         self::assertNull($visitor->afterTraverse([$namespace]));
     }
 
-    public function testDoesNotReplaceUnknownImportedFunction()
+    public function testDoesNotReplaceUnknownImportedFunction() : void
     {
         $namespace    = new Namespace_(new Name('bar'));
         $use          = new Use_([new UseUse(new Name('baz\\foo'))], Use_::TYPE_FUNCTION);
@@ -184,7 +184,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         self::assertNull($visitor->afterTraverse([$namespace]));
     }
 
-    public function testDoesNotReplaceUnknownImportedFunctionWithDifferentCasing()
+    public function testDoesNotReplaceUnknownImportedFunctionWithDifferentCasing() : void
     {
         $namespace    = new Namespace_(new Name('bar'));
         $use          = new Use_([new UseUse(new Name('baz\\fOo'))], Use_::TYPE_FUNCTION);
@@ -212,7 +212,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         self::assertNull($visitor->afterTraverse([$namespace]));
     }
 
-    public function testDoesNotReplaceUnknownImportedAliasedFunction()
+    public function testDoesNotReplaceUnknownImportedAliasedFunction() : void
     {
         $namespace    = new Namespace_(new Name('bar'));
         $use          = new Use_([new UseUse(new Name('baz\\bar'), 'foo')], Use_::TYPE_FUNCTION);
@@ -240,7 +240,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         self::assertNull($visitor->afterTraverse([$namespace]));
     }
 
-    public function testDoesNotReplaceUnknownImportedAliasedFunctionWithDifferentCasing()
+    public function testDoesNotReplaceUnknownImportedAliasedFunctionWithDifferentCasing() : void
     {
         $namespace    = new Namespace_(new Name('bar'));
         $use          = new Use_([new UseUse(new Name('baz\\bar'), 'fOo')], Use_::TYPE_FUNCTION);
@@ -268,7 +268,7 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         self::assertNull($visitor->afterTraverse([$namespace]));
     }
 
-    public function testDoesNotReplaceQualifiedFunctionCalls()
+    public function testDoesNotReplaceQualifiedFunctionCalls() : void
     {
         $namespace    = new Namespace_(new Name('bar'));
         $functionCall = new FuncCall(new FullyQualified('FOO'));
