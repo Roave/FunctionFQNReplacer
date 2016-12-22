@@ -93,7 +93,7 @@ suite: 133a2c6cc9c7a295d7b89ff84b2cfff4f39d8935, date: 2016-12-22, stime: 23:10:
 +----------------------------------------+---------+---------+---------+---------+---------+--------+---------+
 ```
 
-As you can see, `call_user_func()` vs `call_user_func()` is a sensible difference.
+As you can see, `call_user_func()` vs `\call_user_func()` is a sensible difference.
 
 Feel free to add benchmarks to the [`benchmark/`](benchmark) directory.
 
