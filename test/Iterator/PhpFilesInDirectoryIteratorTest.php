@@ -78,6 +78,26 @@ final class PhpFilesInDirectoryIteratorTest extends PHPUnit_Framework_TestCase
     {
         return [
             [
+                [__DIR__ . '/../../test-asset/Iterator/PhpFilesInDirectoryIteratorTest/DirWithOneHhFile/1.hh'],
+                0
+            ],
+            [
+                [
+                    __DIR__ . '/../../test-asset/Iterator/PhpFilesInDirectoryIteratorTest/DirWithOneHhFile/1.hh',
+                    __DIR__ . '/../../test-asset/Iterator/PhpFilesInDirectoryIteratorTest/DirWithOnePhpFile/1.php',
+                ],
+                1
+            ],
+            [
+                [
+                    __DIR__ . '/../../test-asset/Iterator/PhpFilesInDirectoryIteratorTest/DirWithOneHhFile/1.hh',
+                    __DIR__ . '/../../test-asset/Iterator/PhpFilesInDirectoryIteratorTest/DirWithOnePhpFile/1.php',
+                    __DIR__ . '/../../test-asset/Iterator/PhpFilesInDirectoryIteratorTest/EmptyDirectory',
+                    __DIR__ . '/../../test-asset/Iterator/PhpFilesInDirectoryIteratorTest/DirWithOnePhpFile',
+                ],
+                2
+            ],
+            [
                 [__DIR__ . '/../../test-asset/Iterator/PhpFilesInDirectoryIteratorTest'],
                 3
             ],
