@@ -41,11 +41,11 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         $traverser->addVisitor(new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(
             function (string $functionName) : bool {
                 return in_array(
-                    $functionName,
+                    strtolower($functionName),
                     [
                         'base_namespace_function',
-                        'Bar\\bar_namespace_function',
-                        'Foo\\foo_namespace_function',
+                        'bar\\bar_namespace_function',
+                        'foo\\foo_namespace_function',
                     ],
                     true
                 );
