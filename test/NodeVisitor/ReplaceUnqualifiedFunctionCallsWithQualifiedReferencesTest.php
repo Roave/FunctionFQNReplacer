@@ -21,6 +21,9 @@ declare(strict_types=1);
 namespace RoaveTest\FunctionFQNReplacer\NodeVisitor;
 
 use PhpParser\Node;
+use PhpParser\Node\Expr\FuncCall;
+use PhpParser\Node\Name;
+use PhpParser\Node\Name\FullyQualified;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter\Standard;
@@ -76,5 +79,23 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         self::assertNull($visitor->enterNode($node));
         self::assertNull($visitor->leaveNode($node));
         self::assertNull($visitor->afterTraverse([$node]));
+    }
+
+    public function testReplacesFunctionCallInGlobalNamespace()
+    {
+        $functionCall = new FuncCall(new Name('foo'));
+
+        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function () {
+            return true;
+        });
+
+        self::assertNull($visitor->beforeTraverse([$functionCall]));
+        self::assertNull($visitor->enterNode($functionCall));
+
+        $replaced = $visitor->leaveNode($functionCall);
+
+        self::assertNotSame($functionCall, $replaced);
+        self::assertEquals(new FuncCall(new FullyQualified('foo')), $replaced);
+        self::assertNull($visitor->afterTraverse([$functionCall]));
     }
 }
