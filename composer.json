@@ -10,7 +10,9 @@
         "squizlabs/php_codesniffer": "^2.7.1"
     },
     "autoload": {
-        "Roave\\FunctionFQNReplacer\\": "src"
+        "psr-4": {
+            "Roave\\FunctionFQNReplacer\\": "src"
+        }
     },
     "autoload-dev": {
         "psr-4": {
