@@ -1,4 +1,5 @@
 {
+    "name": "roave/function-fqn-replacer",
     "require": {
         "php":                     "^7.1",
         "roave/better-reflection": "dev-master",
