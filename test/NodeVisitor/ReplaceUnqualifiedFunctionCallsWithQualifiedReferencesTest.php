@@ -20,6 +20,7 @@ declare(strict_types=1);
 
 namespace RoaveTest\FunctionFQNReplacer\NodeVisitor;
 
+use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter\Standard;
@@ -60,5 +61,20 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
                     ->parse(file_get_contents(__DIR__ . '/../../test-asset/mixed-function-references.php'))
             ))
         );
+    }
+
+    public function testDoesNotReplaceUnknownNodeTypes()
+    {
+        /* @var $node Node */
+        $node = $this->createMock(Node::class);
+
+        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function () {
+            return true;
+        });
+
+        self::assertNull($visitor->beforeTraverse([$node]));
+        self::assertNull($visitor->enterNode($node));
+        self::assertNull($visitor->leaveNode($node));
+        self::assertNull($visitor->afterTraverse([$node]));
     }
 }
