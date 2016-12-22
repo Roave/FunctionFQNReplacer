@@ -1,5 +1,16 @@
 {
-    "name": "roave/function-fqn-replacer",
+    "name":        "roave/function-fqn-replacer",
+    "description": "Replaces relative references to internal functions with absolute references",
+    "type":        "library",
+    "license":     "MIT",
+    "homepage":    "https://github.com/Ocramius/FunctionFQNReplacer",
+    "authors": [
+        {
+            "name":     "Marco Pivetta",
+            "email":    "ocramius@gmail.com",
+            "homepage": "http://ocramius.github.io/"
+        }
+    ],
     "require": {
         "php":                     "^7.1",
         "roave/better-reflection": "dev-master",
