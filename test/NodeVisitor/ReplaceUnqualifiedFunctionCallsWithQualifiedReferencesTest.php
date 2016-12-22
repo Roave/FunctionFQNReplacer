@@ -183,4 +183,32 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         $visitor->leaveNode($namespace);
         self::assertNull($visitor->afterTraverse([$namespace]));
     }
+
+    public function testDoesNotReplaceUnknownImportedFunctionWithDifferentCasing()
+    {
+        $namespace    = new Namespace_(new Name('bar'));
+        $use          = new Use_([new UseUse(new Name('baz\\foo'))], Use_::TYPE_FUNCTION);
+        $functionCall = new FuncCall(new Name('FOO'));
+
+        $namespace->stmts[] = $use;
+        $namespace->stmts[] = $functionCall;
+
+        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function () {
+            self::fail('Not expected to be called');
+        });
+
+        self::assertNull($visitor->beforeTraverse([$namespace]));
+        self::assertNull($visitor->enterNode($namespace));
+        self::assertNull($visitor->enterNode($use));
+        self::assertNull($visitor->leaveNode($use));
+        self::assertNull($visitor->enterNode($functionCall));
+
+        $replaced = $visitor->leaveNode($functionCall);
+
+        self::assertNotSame($functionCall, $replaced);
+        self::assertEquals(new FuncCall(new Name('FOO')), $replaced);
+
+        $visitor->leaveNode($namespace);
+        self::assertNull($visitor->afterTraverse([$namespace]));
+    }
 }
