@@ -94,7 +94,7 @@ EOT
 
             file_put_contents(
                 $file,
-                $printer->prettyPrint($traverser->traverse($parser->parse(file_get_contents($file))))
+                "<?php\n" . $printer->prettyPrint($traverser->traverse($parser->parse(file_get_contents($file))))
             );
         }
     }
