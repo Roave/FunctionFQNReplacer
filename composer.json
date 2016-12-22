@@ -20,5 +20,8 @@
             "RoaveBench\\FunctionFQNReplacer\\": "benchmark",
             "RoaveTest\\FunctionFQNReplacer\\":  "test"
         }
-    }
+    },
+    "bin": [
+        "bin/function-fqn-replacer"
+    ]
 }
