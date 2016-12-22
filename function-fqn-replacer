@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+use Roave\FunctionFQNReplacer\Console\Command\ReplaceFunctionCalls;
+use Symfony\Component\Console\Application;
+
+$autoloadFiles = [__DIR__ . '/vendor/autoload.php', __DIR__ . '/../../autoload.php'];
+$autoloaded    = false;
+
+foreach ($autoloadFiles as $autoloadFile) {
+    if (file_exists($autoloadFile)) {
+        require_once $autoloadFile;
+
+        $autoloaded = true;
+
+        break;
+    }
+}
+
+if (! $autoloaded) {
+    throw new \RuntimeException('An autoloader could not be detected: did you install this package via composer?');
+}
+
+$cli = new Application('Function FQN Replacer');
+
+$cli->add(new ReplaceFunctionCalls());
+
+$cli->run();

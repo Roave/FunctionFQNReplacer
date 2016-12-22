@@ -1,0 +1,39 @@
+{
+    "name":        "roave/function-fqn-replacer",
+    "description": "Replaces relative references to internal functions with absolute references",
+    "type":        "library",
+    "license":     "MIT",
+    "homepage":    "https://github.com/Ocramius/FunctionFQNReplacer",
+    "authors": [
+        {
+            "name":     "Marco Pivetta",
+            "email":    "ocramius@gmail.com",
+            "homepage": "http://ocramius.github.io/"
+        }
+    ],
+    "require": {
+        "php":                     "^7.1",
+        "roave/better-reflection": "dev-master",
+        "symfony/console":         "^3.2.1"
+    },
+    "require-dev": {
+        "humbug/humbug":             "dev-master",
+        "phpbench/phpbench":         "^0.13.0",
+        "phpunit/phpunit":           "^5.7.4",
+        "squizlabs/php_codesniffer": "^2.7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Roave\\FunctionFQNReplacer\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RoaveBench\\FunctionFQNReplacer\\": "benchmark",
+            "RoaveTest\\FunctionFQNReplacer\\":  "test"
+        }
+    },
+    "bin": [
+        "function-fqn-replacer"
+    ]
+}
