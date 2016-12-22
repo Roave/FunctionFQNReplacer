@@ -1,5 +1,4 @@
 <?php
-
 namespace {
     function base_namespace_function()
     {
