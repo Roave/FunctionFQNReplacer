@@ -1,7 +1,8 @@
 {
     "require": {
-        "php": "^7.1",
-        "roave/better-reflection": "dev-master"
+        "php":                     "^7.1",
+        "roave/better-reflection": "dev-master",
+        "symfony/console":         "^3.2.1"
     },
     "require-dev": {
         "humbug/humbug":             "dev-master",
