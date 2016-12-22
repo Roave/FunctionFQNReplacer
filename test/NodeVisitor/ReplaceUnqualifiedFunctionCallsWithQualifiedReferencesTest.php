@@ -24,6 +24,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter\Standard;
@@ -97,5 +98,29 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         self::assertNotSame($functionCall, $replaced);
         self::assertEquals(new FuncCall(new FullyQualified('foo')), $replaced);
         self::assertNull($visitor->afterTraverse([$functionCall]));
+    }
+
+    public function testReplacesUnknownFunctionCallInNamespace()
+    {
+        $namespace    = new Namespace_(new Name('bar'));
+        $functionCall = new FuncCall(new Name('foo'));
+
+        $namespace->stmts[] = $functionCall;
+
+        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function () {
+            return false;
+        });
+
+        self::assertNull($visitor->beforeTraverse([$namespace]));
+        self::assertNull($visitor->enterNode($namespace));
+        self::assertNull($visitor->enterNode($functionCall));
+
+        $replaced = $visitor->leaveNode($functionCall);
+
+        self::assertNotSame($functionCall, $replaced);
+        self::assertEquals(new FuncCall(new FullyQualified('foo')), $replaced);
+
+        $visitor->leaveNode($namespace);
+        self::assertNull($visitor->afterTraverse([$namespace]));
     }
 }
