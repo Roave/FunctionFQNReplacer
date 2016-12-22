@@ -123,4 +123,28 @@ final class ReplaceUnqualifiedFunctionCallsWithQualifiedReferencesTest extends P
         $visitor->leaveNode($namespace);
         self::assertNull($visitor->afterTraverse([$namespace]));
     }
+
+    public function testReplacesKnownFunctionCallInNamespace()
+    {
+        $namespace    = new Namespace_(new Name('bar'));
+        $functionCall = new FuncCall(new Name('foo'));
+
+        $namespace->stmts[] = $functionCall;
+
+        $visitor = new ReplaceUnqualifiedFunctionCallsWithQualifiedReferences(function () {
+            return true;
+        });
+
+        self::assertNull($visitor->beforeTraverse([$namespace]));
+        self::assertNull($visitor->enterNode($namespace));
+        self::assertNull($visitor->enterNode($functionCall));
+
+        $replaced = $visitor->leaveNode($functionCall);
+
+        self::assertNotSame($functionCall, $replaced);
+        self::assertEquals(new FuncCall(new FullyQualified('bar\\foo')), $replaced);
+
+        $visitor->leaveNode($namespace);
+        self::assertNull($visitor->afterTraverse([$namespace]));
+    }
 }
