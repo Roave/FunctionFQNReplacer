@@ -60,3 +60,39 @@ As you can see, `INIT_NS_FCALL_BY_NAME` is gone. This is one of the many optimiz
 applied by PHP 7 and newer versions (see
 [zend_compile.c](https://github.com/php/php-src/blob/PHP-7.1/Zend/zend_compile.c) for more
 examples).
+
+## Benchmark
+
+All of the above sounds like a silly and pointless micro-optimization, but it makes a huge
+difference when it comes to commonly and widespread libraries.
+
+In order to state the point more clearly, some benchmarks are provided with this package.
+
+Simply run `php -n run --revs=100 --iterations=3 --warmup=2 --report=aggregate` from within
+this project:
+
+```
+$ php -n ./vendor/bin/phpbench run --revs=1000 --iterations=10 --warmup=2 --report=aggregate
+PhpBench 0.13.0. Running benchmarks.
+Using configuration file: FunctionFQNReplacer/phpbench.json
+
+\RoaveBench\FunctionFQNReplacer\AbsoluteFunctionReferenceBench
+
+    benchCallUserFuncWithRelativeReferenceI2 P0 	[μ Mo]/r: 2.603 2.586 (μs) [μSD μRSD]/r: 0.034μs 1.31%
+    benchCallUserFuncWithAbsoluteReferenceI2 P0 	[μ Mo]/r: 1.767 1.635 (μs) [    benchCallUserFuncWithAbsoluteReferenceR3 I2 P0 	[μ Mo]/r: 1.793 1.799 (μs) [μSD μRSD]/r: 0.009μs 0.53%
+
+2 subjects, 6 iterations, 200 revs, 0 rejects
+(best [mean mode] worst) = 1.780 [2.198 2.192] 1.800 (μs)
+⅀T: 13.190μs μSD/r 0.022μs μRSD/r: 0.916%
+suite: 133a2c6cc9c7a295d7b89ff84b2cfff4f39d8935, date: 2016-12-22, stime: 23:10:51
++----------------------------------------+---------+---------+---------+---------+---------+--------+---------+
+| subject                                | best    | mean    | mode    | worst   | stdev   | rstdev | diff    |
++----------------------------------------+---------+---------+---------+---------+---------+--------+---------+
+| benchCallUserFuncWithRelativeReference | 2.642μs | 2.729μs | 2.694μs | 2.839μs | 0.062μs | 2.28%  | +68.78% |
+| benchCallUserFuncWithAbsoluteReference | 1.577μs | 1.617μs | 1.610μs | 1.688μs | 0.029μs | 1.77%  | 0.00%   |
++----------------------------------------+---------+---------+---------+---------+---------+--------+---------+
+```
+
+As you can see, `call_user_func()` vs `call_user_func()` is a sensible difference.
+
+Feel free to add benchmarks to the [`benchmark/`](benchmark) directory.
