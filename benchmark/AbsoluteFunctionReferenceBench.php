@@ -23,6 +23,9 @@ namespace RoaveBench\FunctionFQNReplacer;
 /**
  * Benchmark that provides baseline results for simple absolute versus relative method reference calls
  *
+ * Note that more functions can be added here: need to look up which ones are optimized
+ * in https://github.com/php/php-src/blob/PHP-7.1/Zend/zend_compile.c
+ *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
