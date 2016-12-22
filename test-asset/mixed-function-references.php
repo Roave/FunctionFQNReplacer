@@ -17,6 +17,7 @@ namespace Foo {
 namespace Foo {
     use function Baz\imported_function;
     use function absolute_imported_function;
+    use function alias_imported_function as alias_name;
     // not replaced
     imported_function();
     // not replaced
@@ -48,11 +49,17 @@ namespace Foo {
     Foo\foo_namespace_function();
     // replaced with absolute reference to \Foo\foo_namespace_function
     foo_namespace_function();
+    // alias replacement
+    // not replaced
+    alias_name();
+    // not replaced
+    Foo\alias_name();
 }
 // now the same, but with case sensitivity changes
 namespace Foo {
     use function Baz\imported_Function;
     use function absolute_Imported_function;
+    use function alias_imported_function as alias_name;
     // not replaced
     IMPORTED_FUNCTION();
     // not replaced
@@ -84,4 +91,9 @@ namespace Foo {
     FOO\FOO_NAMESPACE_FUNCTION();
     // replaced with absolute reference to \Foo\foo_namespace_function
     FOO_NAMESPACE_FUNCTION();
+    // alias replacement
+    // not replaced
+    ALIAS_NAME();
+    // not replaced
+    Foo\ALIAS_NAME();
 }
