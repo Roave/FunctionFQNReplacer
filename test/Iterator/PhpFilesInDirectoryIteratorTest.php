@@ -20,13 +20,8 @@ declare(strict_types=1);
 
 namespace RoaveTest\FunctionFQNReplacer\Iterator;
 
-use BetterReflection\Identifier\IdentifierType;
-use BetterReflection\Reflection\Reflection;
-use BetterReflection\Reflector\FunctionReflector;
-use BetterReflection\SourceLocator\Type\SourceLocator;
 use PHPUnit_Framework_TestCase;
 use Roave\FunctionFQNReplacer\Iterator\PhpFilesInDirectoryIterator;
-use Roave\FunctionFQNReplacer\Lookup\FunctionExists;
 
 /**
  * @author Marco Pivetta <ocramius@gmail.com>
