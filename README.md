@@ -122,3 +122,13 @@ replaced.
 Additional parameters are the paths where function definitions can be found. The tool
 needs to know these in order to avoid replacing functions that may not be internal.
 
+## Alternatives
+
+This tool was built in a rush, but is quite well tested and based on solid background
+foundations. Still, it will modify whitespace alignment in your source files due to
+technical limitations of the current PHP AST parser.
+
+If you don't like these consequences, consider using 
+[`nilportugues/php-backslasher`](https://github.com/nilportugues/php-backslasher) instead,
+which has been around for more time, and uses a lower level implementation of token
+replacement which preserves whitespace alignment
