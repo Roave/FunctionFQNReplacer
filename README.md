@@ -107,7 +107,7 @@ composer create-project roave/function-fqn-replacer
 
 ## Usage
 
-Please beware that this project the internal code generator of
+Please beware that this project uses the internal code generator of
 [`nikic/php-parser`](https://github.com/nikic/PHP-Parser). This means that it
 **will break your coding style** when recreating the sources of your PHP files. This is a
 [known and unresolved issue](https://github.com/nikic/PHP-Parser/issues/41).
