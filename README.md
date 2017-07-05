@@ -102,7 +102,7 @@ Feel free to add benchmarks to the [`benchmark/`](benchmark) directory.
 This project is not meant to be run as a dependency: please install it as standalone.
 
 ```php
-composer create-project roave/function-fqn-replacer
+composer create-project roave/function-fqn-replacer -sdev
 ```
 
 ## Usage
